@@ -64,18 +64,18 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       if( that.maxWidth === 0 ){
         that.maxWidth = that.element.prop('offsetWidth');
       }
-      that.maxHeight = that.maxHeight ? parseInt(that.maxHeight): 0;
-      if( that.maxHeight === 0 ){
-        that.maxHeight = that.element.prop('offsetHeight');
+      that.height = that.height ? parseInt(that.height): 0;
+      if( that.height === 0 ){
+        that.height = that.element.prop('offsetHeight');
       }
       var currentElementParentWidth = that.elementParent.prop('offsetWidth');
       if( currentElementParentWidth < that.maxWidth ){
-        var newHeight = (that.maxHeight * currentElementParentWidth) / that.maxWidth;
+        var newHeight = that.height;
         that.element.css('width', currentElementParentWidth + 'px');
         that.element.css('height', newHeight + 'px');
       }else if( currentElementParentWidth >= that.maxWidth ){
         that.element.css('width', that.maxWidth + 'px');
-        that.element.css('height', that.maxHeight + 'px');
+        that.element.css('height', that.height + 'px');
       }
     };
 
@@ -146,13 +146,13 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         that.startAutoSlide();
       }
     };
-	
-    that.validateAutoSlideStopOnAction = function() { 
-      if( typeof(that.autoSlideStopOnAction) === 'string' ){ 
-        that.autoSlideStopOnAction = that.autoSlideStopOnAction === 'true' ? true : false; 
-      } 
-    }; 
- 	
+
+    that.validateAutoSlideStopOnAction = function() {
+      if( typeof(that.autoSlideStopOnAction) === 'string' ){
+        that.autoSlideStopOnAction = that.autoSlideStopOnAction === 'true' ? true : false;
+      }
+    };
+
     that.restartAutoSlide = function() {
       if (!that.autoSlide) {
         return;
@@ -196,10 +196,10 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       that.radioButtonIndex = that.currentIndex;
       that.currentMarginLeftValue += that.currentWidth;
       that.applyMarginLeft();
-      if (that.autoSlideStopOnAction) { 
-        that.stopAutoSlide(); 
-      } else {         
-        that.restartAutoSlide(); 
+      if (that.autoSlideStopOnAction) {
+        that.stopAutoSlide();
+      } else {
+        that.restartAutoSlide();
       }
       if (that.currentIndex === -1) {
         that.restartFromLastItem();
@@ -230,10 +230,10 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       that.radioButtonIndex = that.currentIndex;
       that.currentMarginLeftValue -= that.currentWidth;
       that.applyMarginLeft();
-      if (!autoSlide && that.autoSlideStopOnAction) { 
-        that.stopAutoSlide(); 
-      } else {         
-        that.restartAutoSlide(); 
+      if (!autoSlide && that.autoSlideStopOnAction) {
+        that.stopAutoSlide();
+      } else {
+        that.restartAutoSlide();
       }
       if (that.currentIndex === that.data.length) {
         $timeout(function() {
@@ -269,11 +269,11 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       }
       that.currentIndex = that.radioButtonIndex;
       that.applyMarginLeft();
-      if (that.autoSlideStopOnAction) { 
-        that.stopAutoSlide(); 
-      } else {         
-        that.restartAutoSlide(); 
-      }         
+      if (that.autoSlideStopOnAction) {
+        that.stopAutoSlide();
+      } else {
+        that.restartAutoSlide();
+      }
 	};
 
     that.isDataInvalidOrTooSmall = function() {
@@ -306,9 +306,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       if (attrs.autoSlideTime === undefined) {
         ctrl.autoSlideTime = 5000;
       }
-      if (attrs.autoSlideStopOnAction === undefined) { 
-        ctrl.autoSlideStopOnAction = false; 
-      }       	  
+      if (attrs.autoSlideStopOnAction === undefined) {
+        ctrl.autoSlideStopOnAction = false;
+      }
       ctrl.registerElement(element);
       scope.$on('$destroy', function() {
         ctrl.stopAutoSlide();
@@ -319,13 +319,13 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       scope.$watch('ctrl.autoSlideTime', function() {
         ctrl.restartAutoSlide();
       });
-      scope.$watch('ctrl.autoSlideStopOnAction', function() { 
-        ctrl.validateAutoSlideStopOnAction(); 
+      scope.$watch('ctrl.autoSlideStopOnAction', function() {
+        ctrl.validateAutoSlideStopOnAction();
       });
       scope.$watch('ctrl.data', function () {
         ctrl.onDataChange();
       });
-      
+
     }
 
     return {
@@ -339,9 +339,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         data: '=',
         itemTemplateUrl: '=',
         maxWidth: '@?',
-        maxHeight: '@?',
+        height: '@?',
         autoSlide: '@?',
-        autoSlideTime: '@?', 
+        autoSlideTime: '@?',
         autoSlideStopOnAction: '@?'
       },
       link: link
